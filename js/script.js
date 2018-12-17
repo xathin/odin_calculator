@@ -66,11 +66,11 @@ btns.forEach((btn) => {
             values.push(parseInt(displayString));
             console.log(values.toString());
             // run operation(s)
+            total = values.shift();
             while (values.length > 0) {
-                let op1 = values.shift();
                 let operation = values.shift();
                 let op2 = values.shift();
-                total += operate(operation, op1, op2);
+                total = operate(operation, total, op2);
                 console.log(total.toString());
             }
             displayString = total.toString();
