@@ -39,25 +39,64 @@ function operate(operation, op1, op2) {
 
 const display = document.querySelector('#display');
 
-var displayString = "0";
+let displayString = "0";
+
+const values = [];
 
 function updateDisplay() {
     display.textContent = displayString;
 }
 
+function clearDisplay() {
+    displayString = "0";
+    values.splice(0, values.length);
+}
+
 const btns = document.querySelectorAll('button');
+
+let total = 0;
 
 btns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-        if (e.target.getAttribute('id') === '=') {
+        let key = e.target.getAttribute('id');
+        if (key === '=') {
+            if (values.length == 0) {
+                return;
+            }
+            values.push(parseInt(displayString));
+            console.log(values.toString());
             // run operation(s)
-        } else if (e.target.getAttribute('id') === 'clear') {
-            displayString = "0";
+            while (values.length > 0) {
+                let op1 = values.shift();
+                let operation = values.shift();
+                let op2 = values.shift();
+                total += operate(operation, op1, op2);
+                console.log(total.toString());
+            }
+            displayString = total.toString();
+            updateDisplay();
+            clearDisplay();
+            total = 0;
+            return;
+        } else if (key === 'clear') {
+            clearDisplay();
         } else {
             if (displayString === "0") {
-                displayString = e.target.getAttribute('id');
+                if (key == '+' || key == '-' || key == '*' || key == '/') {
+                    return;
+                } else {
+                    displayString = key;
+                }
             } else {
-                displayString += e.target.getAttribute('id');
+                if (key == '+' || key == '-' || key == '*' || key == '/') {
+                    values.push(parseInt(displayString));
+                    values.push(key);
+                    displayString = "";
+                    console.log(values.toString());
+                    return;
+                } else {
+                    displayString += key;
+                }
             }
         }
         updateDisplay();
