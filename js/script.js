@@ -36,3 +36,32 @@ function operate(operation, op1, op2) {
             break;
     }
 }
+
+const display = document.querySelector('#display');
+
+var displayString = "0";
+
+function updateDisplay() {
+    display.textContent = displayString;
+}
+
+const btns = document.querySelectorAll('button');
+
+btns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        if (e.target.getAttribute('id') === '=') {
+            // run operation(s)
+        } else if (e.target.getAttribute('id') === 'clear') {
+            displayString = "0";
+        } else {
+            if (displayString === "0") {
+                displayString = e.target.getAttribute('id');
+            } else {
+                displayString += e.target.getAttribute('id');
+            }
+        }
+        updateDisplay();
+    });
+});
+
+updateDisplay();
