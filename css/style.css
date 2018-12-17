@@ -1,0 +1,43 @@
+#container {
+    margin: 0 auto;
+    padding-top: 10px;
+    width: 320px;
+}
+
+#display {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 0;
+    text-align: right;
+}
+
+button {
+    background-color: lightslategray;
+    width: 78px;
+    height: 78px;
+    border: 1px solid slategray;
+    border-radius: 5px;
+    color: darkslategray;
+    font-size: 3em;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+    margin: 1px;
+}
+
+button:hover {
+    background-color: gray;
+}
+
+button:active {
+    background-color: whitesmoke;
+}
+
+button:first-child {
+    margin-left: 0;
+}
+
+button:last-child {
+    margin-right: 0;
+}
