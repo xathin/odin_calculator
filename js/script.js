@@ -44,7 +44,7 @@ let displayString = "0";
 const values = [];
 
 function updateDisplay() {
-    display.textContent = displayString;
+    display.textContent = Math.round(parseFloat(displayString) * 1000000 + Number.EPSILON) / 1000000;
 }
 
 function clearDisplay() {
@@ -60,7 +60,7 @@ btns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         let key = e.target.getAttribute('id');
         if (key === '=') {
-            if (values.length == 0) {
+            if (values.length < 2) {
                 return;
             }
             values.push(parseInt(displayString));
