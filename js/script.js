@@ -71,7 +71,7 @@ btns.forEach((btn) => {
             if (values.length < 2) {
                 return;
             }
-            values.push(parseInt(displayString));
+            values.push(parseFloat(displayString));
             console.log(values.toString());
             // run operation(s)
             total = values.shift();
@@ -97,7 +97,7 @@ btns.forEach((btn) => {
                 }
             } else {
                 if (key == '+' || key == '-' || key == '*' || key == '/') {
-                    values.push(parseInt(displayString));
+                    values.push(parseFloat(displayString));
                     values.push(key);
                     displayString = "";
                     console.log(values.toString());
