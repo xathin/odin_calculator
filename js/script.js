@@ -29,7 +29,13 @@ function operate(operation, op1, op2) {
             break;
 
         case '/':
-            return divide(op1, op2);
+            if (op2 == 0) {
+                alert("Cannot divide by zero!");
+                clearDisplay();
+                return null;
+            } else {
+                return divide(op1, op2);
+            }
             break;
 
         default:
@@ -44,7 +50,9 @@ let displayString = "0";
 const values = [];
 
 function updateDisplay() {
-    display.textContent = Math.round(parseFloat(displayString) * 1000000 + Number.EPSILON) / 1000000;
+    if (displayString) {
+        display.textContent = Math.round(parseFloat(displayString) * 1000000 + Number.EPSILON) / 1000000;
+    }
 }
 
 function clearDisplay() {
@@ -67,13 +75,13 @@ btns.forEach((btn) => {
             console.log(values.toString());
             // run operation(s)
             total = values.shift();
-            while (values.length > 0) {
+            while (values.length > 0 && total) {
                 let operation = values.shift();
                 let op2 = values.shift();
                 total = operate(operation, total, op2);
-                console.log(total.toString());
+                console.log(String(total));
             }
-            displayString = total.toString();
+            displayString = String(total);
             updateDisplay();
             clearDisplay();
             total = 0;
