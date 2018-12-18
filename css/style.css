@@ -1,7 +1,7 @@
 #container {
     margin: 0 auto;
     padding-top: 10px;
-    width: 320px;
+    width: 318px;
 }
 
 #display {
@@ -25,6 +25,18 @@ button {
     vertical-align: middle;
     padding: 0;
     margin: 1px;
+}
+
+button .material-icons {
+    font-size: 36px;
+}
+
+button.operation {
+    background-color: lightsteelblue;
+}
+
+.row:first-of-type+.row {
+    text-align: right;
 }
 
 button:hover {

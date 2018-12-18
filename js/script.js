@@ -18,15 +18,12 @@ function operate(operation, op1, op2) {
     switch (operation) {
         case '+':
             return add(op1, op2);
-            break;
 
         case '-':
             return subtract(op1, op2);
-            break;
 
         case '*':
             return multiply(op1, op2);
-            break;
 
         case '/':
             if (op2 == 0) {
@@ -36,7 +33,6 @@ function operate(operation, op1, op2) {
             } else {
                 return divide(op1, op2);
             }
-            break;
 
         default:
             break;
@@ -64,51 +60,102 @@ const btns = document.querySelectorAll('button');
 
 let total = 0;
 
-btns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-        let key = e.target.getAttribute('id');
-        if (key === '=') {
-            if (values.length < 2) {
-                return;
-            }
-            values.push(parseFloat(displayString));
-            console.log(values.toString());
-            // run operation(s)
-            total = values.shift();
-            while (values.length > 0 && total) {
-                let operation = values.shift();
-                let op2 = values.shift();
-                total = operate(operation, total, op2);
-                console.log(String(total));
-            }
-            displayString = String(total);
-            updateDisplay();
-            clearDisplay();
-            total = 0;
+function validInput(input) {
+    switch (input) {
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '0':
+        case '*':
+        case '-':
+        case '+':
+        case '/':
+        case '=':
+        case 'c':
+        case 'backspace':
+        case '.':
+        case 'enter':
+            return true;
+
+        default:
+            break;
+    }
+    return false;
+}
+
+function keyListener(press) {
+    let key;
+    if (press.target === document.body) {
+        key = press.key.toLowerCase();
+    } else {
+        key = press.target.getAttribute('id');
+    }
+    if (!validInput(key)) {
+        return;
+    }
+    if (key === '=' || key === 'enter') {
+        if (values.length < 2) {
             return;
-        } else if (key === 'clear') {
-            clearDisplay();
+        }
+        values.push(parseFloat(displayString));
+        console.log(values.toString());
+        // run operation(s)
+        total = values.shift();
+        while (values.length > 0 && total) {
+            let operation = values.shift();
+            let op2 = values.shift();
+            total = operate(operation, total, op2);
+            console.log(String(total));
+        }
+        displayString = String(total);
+        updateDisplay();
+        clearDisplay();
+        total = 0;
+        return;
+    } else if (key === 'c') {
+        clearDisplay();
+    } else if (key === 'backspace') {
+        if (displayString.length > 1) {
+            displayString = displayString.slice(0, -1);
         } else {
-            if (displayString === "0") {
-                if (key == '+' || key == '-' || key == '*' || key == '/') {
-                    return;
-                } else {
-                    displayString = key;
-                }
+            displayString = "0";
+        }
+    } else {
+        if (displayString === "0") {
+            if (key == '+' || key == '-' || key == '*' || key == '/') {
+                return;
             } else {
-                if (key == '+' || key == '-' || key == '*' || key == '/') {
-                    values.push(parseFloat(displayString));
-                    values.push(key);
-                    displayString = "";
-                    console.log(values.toString());
-                    return;
-                } else {
-                    displayString += key;
-                }
+                displayString = key;
+            }
+        } else {
+            if (key == '+' || key == '-' || key == '*' || key == '/') {
+                values.push(parseFloat(displayString));
+                values.push(key);
+                displayString = "";
+                console.log(values.toString());
+                return;
+            } else {
+                displayString += key;
             }
         }
-        updateDisplay();
-    });
+    }
+    updateDisplay();
+}
+
+const body = document.body;
+body.addEventListener('keydown', keyListener);
+
+btns.forEach((btn) => {
+    if (!parseInt(btn.getAttribute('id')) && btn.getAttribute('id') != "0") {
+        btn.classList.add("operation");
+    }
+    btn.addEventListener('click', keyListener);
 });
 
 updateDisplay();
